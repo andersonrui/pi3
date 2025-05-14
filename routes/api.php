@@ -2,19 +2,24 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProductTypeController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductApiController;
+use App\Http\Controllers\ProductTypeApiController;
+use App\Http\Controllers\CustomerApiController;
+use App\Livewire\ProductType;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('productType', ProductTypeController::class);
+Route::apiResource('tipoProduto', ProductTypeApiController::class);
 
-Route::apiResource('product', ProductController::class);
+// Route::apiResource('produto', ProductApiController::class);
 
-Route::apiResource('supplier', SupplierController::class);
+// Route::apiResource('cliente', CustomerApiController::class);
 
-Route::apiResource('customer', CustomerController::class);
+// Route::get('tipoProdutos', ProductType::class)->name('tipoProdutos.index');
+
+Route::get('tipoProdutos', function(){
+    dd(Auth::user());
+})->name('tipoProdutos.index');
+
