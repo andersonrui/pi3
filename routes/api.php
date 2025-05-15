@@ -13,7 +13,7 @@ Route::get('/user', function (Request $request) {
 
 Route::apiResource('tipoProduto', ProductTypeApiController::class);
 
-// Route::apiResource('produto', ProductApiController::class);
+Route::apiResource('produto', ProductApiController::class);
 
 // Route::apiResource('cliente', CustomerApiController::class);
 

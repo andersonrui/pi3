@@ -1,20 +1,27 @@
 <div>
-    <h2>Tipos de Produtos</h2>
+    <h2>Controle de Estoque</h2>
     <div wire:show="show_table">
         <div class="grid grid-cols-12">
             <div class="col-span-6">
                 <x-input label="Busca" wire:model="busca" wire:change='getRecords' />
             </div>
             <div class="ml-14 mt-10 col-span-4">
-                <x-button icon="o-plus" class="btn-sm btn-primary" wire:click="create"
-                    spinner>Nova
-                    Categoria</x-button>
+                <x-button icon="o-plus" class="btn-sm btn-primary" wire:click="create" spinner>Alteração do estoque</x-button>
             </div>
         </div>
-        <x-table :headers="$headers" :rows="$productTypes" striped>
-            @scope('cell_actions', $productType)
-                <x-button icon="o-pencil" class="btn-sm" wire:click="edit('{{ $productType->id }}')" spinner />
-                <x-button icon="o-trash" class="btn-sm" wire:click="delete({{ $productType->id }})" spinner wire:confirm="Deseja realmente excluir o registro selecionado?"/>
+        <x-table :headers="$headers" :rows="$stocks" striped>
+            @scope('cell_entrada', $stock)
+                {{ Carbon\Carbon::createFromFormat('Y-m-d', $stock->entrada)->format('d/m/Y') }}
+            @endscope
+            @scope('cell_produto', $stock)
+                {{ $stock->produto->nome }}
+            @endscope
+            @scope('cell_saldo', $stock)
+                Gerar código para saldo
+            @endscope
+            @scope('cell_actions', $stock)
+                <x-button icon="o-trash" class="btn-sm" wire:click="delete({{ $stock->id }})" spinner
+                    wire:confirm="Deseja realmente excluir o registro selecionado?" />
             @endscope
         </x-table>
     </div>
@@ -31,7 +38,7 @@
                 </div>
             </div>
             <x-slot:actions>
-                <x-button label="Cancelar" wire:click="cancel"/>
+                <x-button label="Cancelar" wire:click="cancel" />
                 <x-button label="Salvar!" class="btn-primary" type="submit" spinner="save" />
             </x-slot:actions>
         </x-form>

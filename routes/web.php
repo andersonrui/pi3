@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\ProductController;
 use App\Livewire\ProductType;
+use App\Livewire\Product;
+use App\Livewire\Stock;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,11 +24,11 @@ Route::middleware(['auth', 'web'])->group(function () {
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 
-    Route::prefix('tipoProduto')->group(function(){
-        Route::get('/', ProductType::class)->name('tipoProduto.index');
-    });
+    Route::get('tipoProduto', ProductType::class)->name('tipoProduto.index');
+    Route::get('produto', Product::class)->name('produto.index');
+    Route::get('estoque', Stock::class)->name('estoque.index');
 
-})->name('tipoProduto');
+});
 
 
 //         Route::name('tipoProdutos')->group(function(){

@@ -11,7 +11,10 @@
                     Categoria</x-button>
             </div>
         </div>
-        <x-table :headers="$headers" :rows="$productTypes" striped>
+        <x-table :headers="$headers" :rows="$products" striped>
+            @scope('cell_produto_tipo_id', $productType)
+                {{ $productType->tipoProduto->nome }}
+            @endscope
             @scope('cell_actions', $productType)
                 <x-button icon="o-pencil" class="btn-sm" wire:click="edit('{{ $productType->id }}')" spinner />
                 <x-button icon="o-trash" class="btn-sm" wire:click="delete({{ $productType->id }})" spinner wire:confirm="Deseja realmente excluir o registro selecionado?"/>
@@ -23,11 +26,12 @@
         <x-form wire:submit="save">
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-2/3">
-                    <x-input wire:model="productTypeId" class="hidden" />
-                    <x-input label="Tipo de Produto" wire:model="nome" />
-                </div>
-                <div class="md:w-1/3 mt-8 ml-4">
-                    <x-toggle label="Ativo" wire:model="ativo" />
+                    <x-input wire:model="productId" class="hidden" />
+                    <x-input label="Produto" wire:model="nome" />
+                    <x-input label="Código de Barras" wire:model="codigo_barras" />
+                    <x-textarea label="Descrição" wire:model="descricao" />
+                    <x-input label="Preço" wire:model="preco" />
+                    <x-select label="Categoria" wire:model="produto_tipo_id" :options="$productTypes" option-label="nome" placeholder="Selecione a categoria..."/>
                 </div>
             </div>
             <x-slot:actions>

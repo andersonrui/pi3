@@ -23,8 +23,8 @@ class ProductTypeService
     public static function store(Request $request)
     {
         $productType = new ProductType();
-        $productType->nome = $request->nome;
-        $productType->ativo = True;
+        $productType->nome = $request->get('nome');
+        $productType->ativo = $request->get('ativo');
         $productType->save();
 
         return $productType;
@@ -45,8 +45,8 @@ class ProductTypeService
     public static function update(Request $request, string $id)
     {
         $productType = ProductType::find($id);
-        $productType->nome = $request->nome;
-        $productType->ativo = $request->ativo;
+        $productType->nome = $request->get('nome');
+        $productType->ativo = $request->get('ativo');
         $productType->save();
         return $productType;
     }
@@ -57,5 +57,12 @@ class ProductTypeService
     public static function destroy(string $id)
     {
         ProductType::destroy($id);
+    }
+
+    public static function search($value)
+    {
+        $productTypes = ProductType::where('nome', 'like', "%$value%");
+
+        return $productTypes->get();
     }
 }

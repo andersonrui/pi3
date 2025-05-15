@@ -4,22 +4,33 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use Livewire\Attributes\Validate;
+use App\Http\Controllers\ProductService;
 use App\Http\Controllers\ProductTypeService;
 use Mary\Traits\Toast;
 
-class ProductType extends Component
+class Product extends Component
 {
 
     use Toast;
 
     public $title = "Tipo de Produto";
 
-    public $productTypeId;
+    public $productId;
     
     #[Validate('required|min:3')]
     public $nome;
     
-    public $ativo;
+    public $codigo_barras;
+
+    public $descricao;
+
+    #[Validate('required|decimal:0,2')]
+    public $preco;
+
+    #[Validate('required')]
+    public $produto_tipo_id;
+
+    public $products;
 
     public $productTypes;
     
@@ -32,23 +43,27 @@ class ProductType extends Component
     public $headers = [
         ['key'=> 'id', 'label' => '#'],
         ['key'=> 'nome', 'label' => 'Categoria'],
+        ['key'=> 'descricao', 'label' => 'Descrição'],
+        ['key'=> 'preco', 'label' => 'Preço'],
+        ['key' => 'produto_tipo_id', 'label' => 'Categoria'],
         ['key'=> 'actions', 'label' => 'Ações'],
     ];
 
     public function render()
     {
         $this->getRecords();
-        return view('livewire.product-type');
+        return view('livewire.product');
     }
 
     public function getRecords()
     {
         if($this->busca == "")
         {
-            $this->productTypes = ProductTypeService::index();
+            $this->products = ProductService::index();
         } else {
-            $this->productTypes = ProductTypeService::search($this->busca);
+            $this->products = ProductService::search($this->busca);
         }        
+        $this->productTypes = ProductTypeService::index();
     }
 
     public function create()
@@ -59,20 +74,26 @@ class ProductType extends Component
     }
 
     public function save()
-    {
-        $this->validate();
+    {       
+        $this->validate();        
 
-        $data = ['nome'=> $this->nome, 'ativo' => ($this->ativo)? true : false];
+        $data = [
+            'nome'=> $this->nome, 
+            'descricao' => $this->descricao,
+            'codigo_barras' => $this->codigo_barras,
+            'preco' => $this->preco,
+            'produto_tipo_id' => $this->produto_tipo_id
+        ];
         
         $request = new \Illuminate\Http\Request();
 
         $request->request->add($data);
 
-        if(!isset($this->productTypeId))
+        if(!isset($this->productId))
         {
-            ProductTypeService::store($request);
+            ProductService::store($request);
         } else {
-            ProductTypeService::update($request, $this->productTypeId);
+            ProductService::update($request, $this->productId);
         }
 
         $this->toast(
@@ -90,11 +111,14 @@ class ProductType extends Component
 
     public function edit($id)
     {
-        $productType = ProductTypeService::show($id);
+        $product = ProductService::show($id);
 
-        $this->productTypeId = $productType->id;
-        $this->nome = $productType->nome;
-        $this->ativo = (bool)($productType->ativo);
+        $this->productId = $product->id;
+        $this->nome = $product->nome;
+        $this->codigo_barras = $product->codigo_barras;
+        $this->descricao = $product->descricao;
+        $this->preco = $product->preco;
+        $this->produto_tipo_id = $product->produto_tipo_id;
 
         $this->is_editing = true;
         $this->show_table = false;
@@ -107,7 +131,7 @@ class ProductType extends Component
 
     public function delete($id)
     {
-        ProductTypeService::destroy($id);
+        ProductService::destroy($id);
 
         $this->toast(
             type:'danger',
