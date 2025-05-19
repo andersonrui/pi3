@@ -14,8 +14,10 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    <flux:navlist.item icon="home" :href="route('venda.index')" :current="request()->routeIs('venda.index')" wire:navigate>{{ __('Venda') }}</flux:navlist.item>
                 </flux:navlist.group>
                 <flux:navlist.group :heading="__('Tabelas Auxiliares')" class="grid">
+                    <flux:navlist.item icon="home" :href="route('cliente.index')" :current="request()->routeIs('cliente.index')" wire:navigate>{{ __('Clientes') }}</flux:navlist.item>
                     <flux:navlist.item icon="home" :href="route('estoque.index')" :current="request()->routeIs('estoque.index')" wire:navigate>{{ __('Estoque') }}</flux:navlist.item>    
                     <flux:navlist.item icon="home" :href="route('produto.index')" :current="request()->routeIs('produto.index')" wire:navigate>{{ __('Produtos') }}</flux:navlist.item>    
                     <flux:navlist.item icon="home" :href="route('tipoProduto.index')" :current="request()->routeIs('tipoProduto.index')" wire:navigate>{{ __('Tipos de Produtos') }}</flux:navlist.item>

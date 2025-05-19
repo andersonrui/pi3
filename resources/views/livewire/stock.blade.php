@@ -17,7 +17,7 @@
                 {{ $stock->produto->nome }}
             @endscope
             @scope('cell_saldo', $stock)
-                Gerar código para saldo
+                {{ $stock->saldo }}
             @endscope
             @scope('cell_actions', $stock)
                 <x-button icon="o-trash" class="btn-sm" wire:click="delete({{ $stock->id }})" spinner
@@ -30,8 +30,10 @@
         <x-form wire:submit="save">
             <div class="md:flex md:items-center mb-6">
                 <div class="md:w-2/3">
-                    <x-input wire:model="productTypeId" class="hidden" />
-                    <x-input label="Tipo de Produto" wire:model="nome" />
+                    <x-input wire:model="stockId" class="hidden" />
+                    <x-input wire:model="entrada" type="date" label="Data de Entrada"/>
+                    <x-select label="Produto" wire:model="produtoId" :options="$products" option-label="nome" placeholder="Selecione o produto..."/>
+                    <x-input wire:model="quantidade" label="Quantidade"/>
                 </div>
                 <div class="md:w-1/3 mt-8 ml-4">
                     <x-toggle label="Ativo" wire:model="ativo" />

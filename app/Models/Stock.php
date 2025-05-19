@@ -13,4 +13,9 @@ class Stock extends Model
     {
         return $this->hasOne(Product::class, 'id', 'produto_id');
     }
+
+    public function getSaldoAttribute()
+    {
+        return $this->where('produto_id', $this->produto_id)->sum('quantidade');
+    }
 }

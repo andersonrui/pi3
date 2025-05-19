@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vendas', function (Blueprint $table) {
+        Schema::create('produtos_vendas', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cliente_id');
-            $table->date('data');
-            $table->float('valor_total', 10, 2);
+            $table->foreignId('venda_id');
+            $table->foreign('venda_id')->references('id')->on('vendas');
+            $table->foreignId('produto_id');
+            $table->foreign('produto_id')->references('id')->on('produtos');
+            $table->integer('quantidade');
+            $table->float('valor_unitario', 6, 2);
             $table->float('desconto', 5, 2);
-            $table->boolean('pago');
-            $table->date('vencimento');
-            $table->foreign('cliente_id')->references('id')->on('clientes');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vendas');
+        Schema::dropIfExists('produtos_vendas');
     }
 };

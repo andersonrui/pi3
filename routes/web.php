@@ -3,10 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Http;
-use App\Http\Controllers\ProductTypeController;
-use App\Http\Controllers\ProductController;
+use App\Livewire\Customer;
 use App\Livewire\ProductType;
 use App\Livewire\Product;
+use App\Livewire\Sale;
 use App\Livewire\Stock;
 
 Route::get('/', function () {
@@ -27,6 +27,8 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('tipoProduto', ProductType::class)->name('tipoProduto.index');
     Route::get('produto', Product::class)->name('produto.index');
     Route::get('estoque', Stock::class)->name('estoque.index');
+    Route::get('venda', Sale::class)->name('venda.index');
+    Route::get('cliente', Customer::class)->name('cliente.index');
 
 });
 
