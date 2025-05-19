@@ -37,6 +37,7 @@
                     <x-input wire:model="desconto" label="Desconto" />
                     <x-toggle wire:model="pago" label="Pago" />
                     <x-choices-offline label="Cliente" wire:model="clienteId" :options="$customers" option-label="nome" placeholder="Selecione o cliente..." single searchable clearable/>
+                    <x-select label="Produto (Somente com estoque...)" wire:model="products_sale" :options="$products" option-label="nome" placeholder="Selecione um produto..." />
                 </div>
             </div>
             <x-slot:actions>

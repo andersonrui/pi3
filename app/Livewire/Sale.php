@@ -40,10 +40,12 @@ class Sale extends Component
     public $pago;
     
     public $products;
+
+    public $products_sale = [];
     
-    public $is_creating = "false";
-    public $is_editing = "false";
-    public $show_table = True;
+    public $is_creating = true;
+    public $is_editing = false;
+    public $show_table = false;
 
     public $busca = "";
 
@@ -66,6 +68,7 @@ class Sale extends Component
     {   
         $this->sales = SaleService::index();
         $this->customers = CustomerService::index();
+        $this->products = StockService::getAvailableProducts();
     }
 
     public function create()

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Stock;
+use App\Models\Product;
 
 class StockService extends Controller
 {
@@ -67,5 +68,24 @@ class StockService extends Controller
         //     ->get();
 
         // return $products;
+    }
+
+    public static function getAvailableProducts()
+    {
+        $stock = Stock::selectRaw('produto_id, SUM(quantidade) as estoque')
+            ->groupBy('produto_id')
+            ->get();
+
+        $ids = [];
+
+        $stock_filtered = array_column(array_filter($stock->toArray(), function($record){
+            if($record['estoque'] > 0){
+                return $record;
+            }
+        }), 'produto_id');
+
+        $products = Product::select('*')->whereIn('id', $stock_filtered)->get();
+
+        return $products;
     }
 }
