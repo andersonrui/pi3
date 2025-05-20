@@ -121,8 +121,8 @@ class Sale extends Component
             'data'=> $this->data, 
             'cliente_id' => $this->clienteId,
             'valor_total' => $this->valorTotal,
-            'desconto' => $this->desconto,
-            'pago' => $this->pago
+            'desconto' => ($this->desconto != NULL) ? $this->desconto : 0,
+            'pago' => ($this->pago) ? true : false
         ];
         
         $request = new \Illuminate\Http\Request();
@@ -142,7 +142,7 @@ class Sale extends Component
             $productSale->produto_id = $product['produto_id'];
             $productSale->quantidade = $product['quantidade'];
             $productSale->valor_unitario = $product['valor_unitario'];
-            $productSale->desconto = $product['desconto'];
+            $productSale->desconto = ($product['desconto'] != NULL) ? $product : 0;
             $productSale->save();
         }
 

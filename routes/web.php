@@ -8,14 +8,15 @@ use App\Livewire\ProductType;
 use App\Livewire\Product;
 use App\Livewire\Sale;
 use App\Livewire\Stock;
+use App\Livewire\Dashboard;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
 
 Route::middleware(['auth', 'web'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('estoque', Stock::class)->name('estoque.index');
     Route::get('venda', Sale::class)->name('venda.index');
     Route::get('cliente', Customer::class)->name('cliente.index');
+    Route::get('dashboard', Dashboard::class)->name('dashboard');
 
 });
 
