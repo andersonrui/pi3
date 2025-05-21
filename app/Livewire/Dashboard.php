@@ -48,9 +48,9 @@ class Dashboard extends Component
     {
         $this->last_sales = Sale::orderBy('data', 'desc')->with(['cliente'])->take(10)->get();
 
-        $this->late_sales = Sale::where('vencimento', '<', Carbon::now())->where('pago', 0)->get();
+        $this->late_sales = Sale::where('vencimento', '<', Carbon::now()->subDays(1))->where('pago', 0)->get();
 
-        $this->due_sales = Sale::where('vencimento', '>=', Carbon::now())->where('pago', 0)->get();
+        $this->due_sales = Sale::where('vencimento', '>=', Carbon::now()->subDays(1))->where('pago', 0)->get();
     }
 
 }

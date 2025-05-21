@@ -9,7 +9,7 @@ use Carbon\Carbon;
 class SaleService extends Controller
 {
     public static function index(){
-        $sales = Sale::with('cliente')->get();
+        $sales = Sale::with(['cliente', 'produtos'])->get();
         return $sales;
     }
 
@@ -35,7 +35,7 @@ class SaleService extends Controller
 
     public static function show($id)
     {
-        $sale = Sale::find($id);
+        $sale = Sale::find($id)->with(['cliente', 'produtos']);
 
         return $sale;
     }
@@ -62,7 +62,9 @@ class SaleService extends Controller
     }
 
     public static function destroy($id){
-        Sale::destroy($id);
+        $sale = Sale::findOrFail($id);
+        $sale->produtos()->delete();
+        $sale->delete();
     }
 
     public static function aVencer()

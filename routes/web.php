@@ -10,9 +10,9 @@ use App\Livewire\Sale;
 use App\Livewire\Stock;
 use App\Livewire\Dashboard;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Route::get('/', function () {
+//     return view('welcome');
+// })->name('home');
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
@@ -30,7 +30,7 @@ Route::middleware(['auth', 'web'])->group(function () {
     Route::get('estoque', Stock::class)->name('estoque.index');
     Route::get('venda', Sale::class)->name('venda.index');
     Route::get('cliente', Customer::class)->name('cliente.index');
-    Route::get('dashboard', Dashboard::class)->name('dashboard');
+    Route::get('/', Dashboard::class)->name('dashboard');
 
 });
 

@@ -265,7 +265,7 @@ class Sale extends Component
             if($this->bag_desconto != 0 && $this->bag_desconto != ""){
                 $this->bag_total = round($this->bag_quantidade * ($this->bag_valor_unitario * ((($this->bag_desconto/100)-1)*-1)), 2);
             } else {
-                $this->bag_total = $this->bag_valor_unitario * $this->bag_quantidade;
+                $this->bag_total = round($this->bag_valor_unitario * $this->bag_quantidade, 2);
             }
         }
     }
@@ -277,11 +277,19 @@ class Sale extends Component
             $produto = ProductService::show($id);
 
             $this->bag_valor_unitario = $produto->preco;
+            $this->calculaValorProduto();
         }
     }
 
     public function cancel()
     {
         $this->reset();
+    }
+
+    public function deleteBag($produto_id)
+    {
+        $key = array_search($produto_id, array_column($this->products_sale, 'produto_id', $produto_id));
+
+        unset($this->product_sales, $key);
     }
 }

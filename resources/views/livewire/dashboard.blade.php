@@ -18,7 +18,8 @@
                     {{ $sale->cliente->nome }}
                 @endscope
                 @scope('cell_vencimento', $sale)
-                    {{ Carbon\Carbon::createFromFormat('Y-m-d', $sale->vencimento)->format('d/m/Y') }}
+                    <div class="text-red-800">
+                        {{ Carbon\Carbon::createFromFormat('Y-m-d', $sale->vencimento)->format('d/m/Y') }}</div>
                 @endscope
             </x-table>
         </x-card>
@@ -34,4 +35,14 @@
             @endscope
         </x-table>
     </x-card>
+    <div vw class="enabled">
+        <div vw-access-button class="active"></div>
+        <div vw-plugin-wrapper>
+            <div class="vw-plugin-top-wrapper"></div>
+        </div>
+    </div>
+    <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('https://vlibras.gov.br/app');
+    </script>
 </div>

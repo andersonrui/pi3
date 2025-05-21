@@ -22,8 +22,8 @@ class CustomerApiController extends Controller
      */
     public function store(Request $request)
     {
-        
-        return response()->json($customer);
+        CustomerService::store($request);
+        return response()->json([$customer], 201);
     }
 
     /**

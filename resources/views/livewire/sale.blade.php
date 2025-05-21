@@ -20,8 +20,8 @@
                 {{ $sale->pago ? 'Sim' : 'Não' }}
             @endscope
             @scope('cell_actions', $sale)
-                <x-button icon="o-pencil" class="btn-sm" wire:click="edit({{ $sale->id }})" spinner />
-                <x-button icon="o-trash" class="btn-sm" wire:click="delete({{ $sale->id }})" spinner
+                <x-button icon="o-pencil" class="btn-sm bg-amber-700 text-white" wire:click="edit({{ $sale->id }})" spinner />
+                <x-button icon="o-trash" class="btn-sm bg-red-800 text-white" wire:click="delete({{ $sale->id }})" spinner
                     wire:confirm="Deseja realmente excluir o registro selecionado?" />
             @endscope
         </x-table>
@@ -75,9 +75,6 @@
                 <div class="col-span-1 ml-3">
                     <x-input label="Desconto" wire:model="bag_desconto" wire:blur="calculaValorProduto" />
                 </div>
-                {{-- <div class="col-span-1 ml-3">
-                    <x-input label="Valor Total" wire:model="bag_total" readonly/>
-                </div> --}}
                 <div class="col-span-2 ml-3 mt-8">
                     <x-button label="Adicionar à venda" wire:click="add_to_bag" />
                 </div>
@@ -89,6 +86,9 @@
 
             <h1>Itens da Venda</h1>
             <x-table :headers="$products_sale_headers" :rows="$products_sale" striped>
+                @scope('cell_produto_id', $product)
+                    {{ \App\Models\Product::find($product['produto_id'])->nome }}
+                @endscope
                 @scope('cell_desconto', $product)
                     {{ $product['desconto'] }}%
                 @endscope
